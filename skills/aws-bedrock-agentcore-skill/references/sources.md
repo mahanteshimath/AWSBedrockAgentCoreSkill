@@ -557,3 +557,15 @@ Every recommendation in this skill is traceable to a source below (369 unique of
 - [Amazon Bedrock AgentCore - Harness [Preview]](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html) - Managed agent loop powered by Strands Agents. Richiede solo model + system prompt + tools. Supporta Bedrock, OpenAI, Gemini. microVM isolate, filesystem persistente, memory integrata. Preview in 4 regioni, nessun costo aggiuntivo.
 - [Amazon Bedrock AgentCore - Direct code deployment (Python)](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-get-started-code-deploy-python.html) - Deploy via zip file senza container. Max 250 MB compresso, 750 MB non compresso. Stessa API contract (@app.entrypoint o /invocations + /ping). Rate: 25 TPS per nuove sessioni.
 - [Strands Agents - Deploy to Terraform](https://strandsagents.com/docs/user-guide/deploy/deploy_to_terraform/index.md) - Terraform IaC per App Runner, Lambda (con Mangum), Google Cloud Run, Azure Container Instances
+
+
+## August 2026 freshness audit
+
+- `freshness-2026-08.md` — post-June-2026 refresh overlay. Official sources:
+  - https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html
+  - https://docs.aws.amazon.com/bedrock/latest/userguide/agents-classic-maintenance-mode.html
+  - https://aws.amazon.com/blogs/aws/introducing-amazon-bedrock-managed-knowledge-base-for-faster-more-accurate-enterprise-ai-applications/
+  - https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-code-deploy-supported-runtimes.html
+  - https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy.html
+  - https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/observability-configure.html
+  - https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-vpc.html

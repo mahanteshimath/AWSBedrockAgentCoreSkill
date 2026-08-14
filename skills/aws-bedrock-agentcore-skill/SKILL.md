@@ -32,21 +32,24 @@ for the user's specific use case.
 
 Every claim in this skill is backed by an official source. The source index lives in
 [references/sources.md](references/sources.md) - open it whenever you need to re-read a
-primary source or verify a detail before recommending it.
+primary source or verify a detail before recommending it. For post-June-2026 changes, open
+[references/freshness-2026-08.md](references/freshness-2026-08.md) before using the older
+area references.
 
 ## How to use this skill
 
-1. **Read the decision tree below** and identify the user's use case and required pattern.
-2. **Open only the reference files that match** (progressive disclosure - the references are
+1. **Read the August 2026 freshness audit first** when answering current AgentCore questions; it captures changes since the June baseline (Agents Classic maintenance mode, AgentCore harness GA, Runtime Instances, Gateway rate limits, Managed Knowledge Base GA, unified traces, Evaluations GA updates).
+2. **Read the decision tree below** and identify the user's use case and required pattern.
+3. **Open only the reference files that match** (progressive disclosure - the references are
    large and detailed; don't load all of them). Each row of the [reference index](#reference-index)
    says when to open which file.
-3. **Confirm maturity before recommending.** Features are labeled GA / Preview. Never propose a
+4. **Confirm maturity before recommending.** Features are labeled GA / Preview. Never propose a
    Preview feature as a production default - surface it with an explicit warning (see
    [GA vs Preview](#ga-vs-preview)).
-4. **Re-verify time-sensitive facts.** Model IDs, prices, and quotas change. This skill points to
+5. **Re-verify time-sensitive facts.** Model IDs, prices, and quotas change. This skill points to
    the live model cards, the Bedrock pricing page, and the Service Quotas console for exact numbers
    instead of hard-coding values that rot.
-5. **Cite your sources back to the user.** When you make a recommendation, name the official URL
+6. **Cite your sources back to the user.** When you make a recommendation, name the official URL
    it came from so the user (and you) can re-open it.
 
 ## Core principles (apply to every AWS agent)
@@ -84,12 +87,12 @@ START: What does the user need the agent to do?
 
 0. FIRST, pick the BUILD APPROACH (the branches below assume the code-first default):
    • Custom / dynamic orchestration  → Strands + Bedrock + AgentCore (code-first, the default here).
-   • Low-code, AWS-managed agent     → Amazon Bedrock managed Agents (InvokeAgent / action groups).
-   • Fixed visual pipeline (a DAG)    → Amazon Bedrock Flows.
+   • Low-code, AWS-managed agent     → AgentCore harness (GA); Bedrock Agents Classic only for existing migrations.
+   • Fixed visual pipeline (a DAG)    → Amazon Bedrock Flows or Step Functions + AgentCore harness.
    • Migrating an OpenAI-SDK app      → Amazon Bedrock Responses API (bedrock-mantle, OpenAI-compatible).
    • Non-Strands framework (LangGraph/CrewAI/LlamaIndex/Google ADK/OpenAI Agents SDK/…) → host it on
                                         AgentCore Runtime (framework-agnostic) → frameworks-on-agentcore.md.
-     For the managed/alternative paths, open: managed-alternatives.md
+     For the managed/alternative paths, open: freshness-2026-08.md, managed-alternatives.md
      Language note: Python is primary; for TypeScript-SDK differences (Workflow is Python-only, Graph
      edge semantics differ), see frameworks-on-agentcore.md.
 
@@ -105,7 +108,7 @@ START: What does the user need the agent to do?
 
 3. The agent must answer over the user's documents / private knowledge?
    → RAG: Amazon Bedrock Knowledge Bases (Retrieve or RetrieveAndGenerate).
-     Open: bedrock.md (Knowledge Bases section), strands.md
+     Open: freshness-2026-08.md, bedrock.md (Knowledge Bases section), strands.md
 
 4. Multiple agents must collaborate?
    → Pick the multi-agent pattern:
@@ -117,7 +120,7 @@ START: What does the user need the agent to do?
      Open: multi-agent.md
 
 5. It must run as a managed / serverless production service?
-   → AgentCore Runtime (recommended for agents) | Fargate/ECS or EKS (HTTP streaming) |
+   → AgentCore Runtime (serverless sessions, direct code deploy, or Instances capacity providers/GPU/long sessions) | Fargate/ECS or EKS (HTTP streaming) |
      Lambda (no response streaming - request/response only).
      Open: agentcore-runtime.md, deployment-iac.md, deployment-frameworks.md
 
@@ -126,7 +129,7 @@ START: What does the user need the agent to do?
      Open: memory.md
 
 7. It must expose external tools securely / act on behalf of a user (auth)?
-   → AgentCore Gateway (turn APIs/Lambda/OpenAPI into MCP tools) + AgentCore Identity (OAuth, token vault).
+   → AgentCore Gateway (turn APIs/Lambda/OpenAPI/runtime/HTTP/inference targets into governed tools) + AgentCore Identity (OAuth, token vault, Private Key JWT).
        • Need deterministic, code-independent tool-call authorization? → AgentCore Policy (Cedar).
      Open: gateway-identity.md   (+ managed-alternatives.md for AgentCore Policy/Cedar)
 
@@ -135,7 +138,7 @@ START: What does the user need the agent to do?
      Open: guardrails.md
 
 9. It needs monitoring / debugging in production?
-   → AgentCore Observability + CloudWatch GenAI Observability (Transaction Search) + OpenTelemetry.
+   → AgentCore Observability + CloudWatch GenAI Observability (Transaction Search) + OpenTelemetry, with unified per-agent span destinations where supported.
        • Need automated quality scoring / regression testing (not just traces)? → AgentCore Evaluations.
      Open: observability.md   (+ managed-alternatives.md for AgentCore Evaluations)
 
