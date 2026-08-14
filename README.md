@@ -1,6 +1,6 @@
 # AWS Bedrock AgentCore Skill
 
-[![version](https://img.shields.io/badge/version-0.1.1-blue)](.claude-plugin/plugin.json) [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE) [![Claude Code plugin](https://img.shields.io/badge/Claude%20Code-plugin-orange)](https://code.claude.com/docs/en/plugins)
+[![version](https://img.shields.io/badge/version-0.1.2-blue)](.claude-plugin/plugin.json) [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE) [![Claude Code plugin](https://img.shields.io/badge/Claude%20Code-plugin-orange)](https://code.claude.com/docs/en/plugins)
 
 A Claude Code plugin (and agent skill) that puts the best practices for building AI agents on AWS, with Amazon Bedrock AgentCore at the center, in one place. Instead of sending the coding agent to search across dozens of AWS docs or work things out by trial and error, it hands over a consolidated, official, source-cited playbook so the agent goes straight to the right approach and can show you the source behind every recommendation.
 
@@ -15,9 +15,9 @@ It is a **Distilled Knowledge Skill (DKS)**: an entire domain (Strands Agents, A
 Concretely, it is not a single template or a code generator. It is a routing layer plus a reference library:
 
 - a `SKILL.md` that acts as a decision tree: it maps the user's use case to a recommended stack and to the exact reference files to open;
-- **20 reference files** (~19,000 lines) covering each area in depth, with an inline `_Source:` URL on every best practice and code snippet;
+- **21 reference files** (~19,000+ lines) covering each area in depth, with an inline `_Source:` URL on every best practice and code snippet;
 - **assets**: a service-selection matrix, a model-selection guide, a pre-production checklist, ready-to-adapt IAM policies, and copy-paste starter snippets;
-- a central source index ([`sources.md`](skills/aws-bedrock-agentcore-skill/references/sources.md)) mapping each topic to its official URL (**369 unique official sources**).
+- a central source index ([`sources.md`](skills/aws-bedrock-agentcore-skill/references/sources.md)) mapping each topic to its official URL (**376+ official source URLs**).
 
 The agent loads only the files a task needs (progressive disclosure), so it stays useful without pulling the whole library into context.
 
@@ -26,7 +26,7 @@ The agent loads only the files a task needs (progressive disclosure), so it stay
 Building agents on AWS (especially Bedrock AgentCore) means a lot of scattered documentation and a fast-changing API surface. Left on its own, a coding agent either crawls across many pages or proceeds by trial and error, and still gets the version-specific details wrong. This skill removes both problems:
 
 - **The best practices are already gathered and organized.** The agent does not have to research half the internet: the relevant official guidance for each area is collected in one place and routed by use case, so it goes straight to the right approach instead of probing around.
-- **It is current and source-cited.** Bedrock AgentCore is recent and changes often. The skill encodes today's official answers and attaches the documentation URL to each one, so the agent (and you) can verify a recommendation instead of trusting it blindly. There are **636 inline source citations** across the reference files.
+- **It is current and source-cited.** Bedrock AgentCore is recent and changes often. The skill encodes today's official answers and attaches the documentation URL to each one, so the agent (and you) can verify a recommendation instead of trusting it blindly. There are **650+ inline source citations** across the reference files.
 - **It prevents the common, non-obvious mistakes.** These are the kind of errors that look correct in review and only fail at deploy: using the legacy `InvokeModel` instead of the Converse API, passing `serviceTier` as a bare string, calling a deprecated `structured_output()`, setting a 1-hour prompt-cache TTL on a model that only supports 5 minutes, ignoring the ARM64 AgentCore runtime contract, or mis-sizing `max_tokens` and hitting the 5x token burndown. The skill documents the correct form for each.
 - **It picks the right pattern, not just the API.** The decision tree distinguishes a simple chatbot from a tool-using agent, RAG, a multi-agent system, a serverless production deployment, and so on, and points to the matching reference. It also covers when a managed alternative (Bedrock Agents, Flows, the Responses API) fits better than the code-first path.
 - **It is maturity-aware.** Every feature is labelled GA or Preview, and Preview is never recommended as a production default.
@@ -59,14 +59,14 @@ The `SKILL.md` decision tree routes across the realistic use-case space:
 
 | Use case | Recommended path |
 |---|---|
-| Build approach (first choice) | Code-first (Strands + AgentCore) · managed Bedrock Agents · Bedrock Flows · Responses API |
+| Build approach (first choice) | Code-first (Strands + AgentCore) · AgentCore harness · Bedrock Flows · Responses API |
 | Simple chatbot (no tools) | Bedrock Converse / minimal Strands agent |
 | Tool-using agent | Strands `@tool` + MCP; AgentCore Browser / Code Interpreter |
-| RAG over documents | Bedrock Knowledge Bases (Retrieve / RetrieveAndGenerate) |
+| RAG over documents | Bedrock Knowledge Bases / AgentCore Managed Knowledge Base |
 | Multi-agent | Strands Graph · Swarm · Workflow · Agents-as-Tools · A2A |
-| Serverless production | AgentCore Runtime (ARM64 contract) · Fargate/ECS/EKS · Lambda |
+| Serverless production | AgentCore Runtime (serverless, direct code, or Instances) · Fargate/ECS/EKS · Lambda |
 | Persistent memory | AgentCore Memory (STM/LTM) · Strands SessionManager |
-| Secure tools / user auth | AgentCore Gateway + Identity (+ Policy/Cedar) |
+| Secure tools / user auth | AgentCore Gateway + Identity (+ Policy/Cedar, Private Key JWT) |
 | Safety / compliance | Bedrock Guardrails |
 | Observability | AgentCore Observability · CloudWatch GenAI · OpenTelemetry · Evaluations |
 | Infrastructure as Code | Terraform-first (`hashicorp/aws` + `awscc`); CDK secondary |
@@ -85,7 +85,8 @@ The `SKILL.md` decision tree routes across the realistic use-case space:
 ├── skills/
 │   └── aws-bedrock-agentcore-skill/
 │       ├── SKILL.md             # Routing layer: decision tree + playbooks + 12 cross-cutting rules
-│       ├── references/          # 20 deep, source-cited reference files
+│       ├── references/          # 21 deep, source-cited reference files
+│       │   ├── freshness-2026-08.md        # post-June-2026 freshness audit and routing overlay
 │       │   ├── strands.md
 │       │   ├── bedrock.md                 # models, Converse, prompt caching + Knowledge Bases/RAG
 │       │   ├── bedrock-platform.md         # Intelligent Prompt Router, batch, fine-tuning, data residency
@@ -105,7 +106,7 @@ The `SKILL.md` decision tree routes across the realistic use-case space:
 │       │   ├── deployment-best-practices.md
 │       │   ├── deployment-cdk.md          # CDK (secondary)
 │       │   ├── deployment-frameworks.md   # Lambda / Fargate / EKS
-│       │   └── sources.md                 # central official-source index (369 URLs)
+│       │   └── sources.md                 # central official-source index (376+ URLs)
 │       ├── assets/
 │       │   ├── service-selection-matrix.md
 │       │   ├── model-selection-guide.md
@@ -117,7 +118,7 @@ The `SKILL.md` decision tree routes across the realistic use-case space:
 └── LICENSE
 ```
 
-At a glance: 1 router + 20 reference files (~19,000 lines), 14 assets, 636 inline source citations, 369 unique official source URLs.
+At a glance: 1 router + 21 reference files (~19,000+ lines), 14 assets, 650+ inline source citations, 376+ official source URLs.
 
 ## How it was built and verified
 
@@ -165,7 +166,7 @@ claude --plugin-dir "/path/to/AWSBedrockAgentCoreSkill"
 
 ## Versioning
 
-Semantic versioning in [`.claude-plugin/plugin.json`](.claude-plugin/plugin.json). Current: 0.1.1. See [CHANGELOG.md](CHANGELOG.md) and the [releases page](https://github.com/ferdinandobons/AWSBedrockAgentCoreSkill/releases). Bump on every change you ship to installers.
+Semantic versioning in [`.claude-plugin/plugin.json`](.claude-plugin/plugin.json). Current: 0.1.2. See [CHANGELOG.md](CHANGELOG.md) and the [releases page](https://github.com/ferdinandobons/AWSBedrockAgentCoreSkill/releases). Bump on every change you ship to installers.
 
 ## License
 

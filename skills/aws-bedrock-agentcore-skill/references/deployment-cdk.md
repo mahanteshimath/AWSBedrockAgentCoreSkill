@@ -1,5 +1,7 @@
 # Deployment & IaC - AWS CDK (secondary)
 
+> **August 2026 refresh:** CDK/CLI coverage now includes more AgentCore surfaces (for example Payments support noted in AgentCore release notes). Still verify CloudFormation/CDK construct coverage for each feature before choosing CDK over Terraform/AWSCC or direct SDK calls. _Source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html_
+
 > Part of the **aws-bedrock-agentcore-skill** skill. See [SKILL.md](../SKILL.md) for the decision tree. Every source below is official - re-open it to verify details.
 
 ## Table of contents

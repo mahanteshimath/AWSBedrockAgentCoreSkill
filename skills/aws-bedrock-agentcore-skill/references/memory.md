@@ -1,5 +1,7 @@
 # Amazon Bedrock AgentCore Memory
 
+> **August 2026 refresh:** AgentCore harness can manage memory as part of a declarative agent configuration, while custom Runtime/Strands agents still need explicit Memory/session wiring. Re-check current Memory and harness release notes before assuming all memory behaviors are code-managed. _Sources: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html, https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html_
+
 > Part of the **aws-bedrock-agentcore-skill** skill. See [SKILL.md](../SKILL.md) for the decision tree. Every source below is official - re-open it to verify details.
 
 ## Table of contents

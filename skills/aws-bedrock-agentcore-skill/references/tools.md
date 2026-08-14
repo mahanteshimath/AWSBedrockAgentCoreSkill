@@ -1,5 +1,7 @@
 # Strands Tools - @tool & MCP Integration
 
+> **August 2026 refresh:** Tool strategy should include both local Strands/MCP tools and Gateway-governed tools. Use Gateway rate limits, source validation, runtime/HTTP/inference targets, Policy/Cedar, and request-filtered Web Search when tools cross trust boundaries or serve multiple agents/users. _Sources: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway.html, https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway-target-connector-web-search-tool.html, https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html_
+
 > Part of the **aws-bedrock-agentcore-skill** skill. See [SKILL.md](../SKILL.md) for the decision tree. Every source below is official - re-open it to verify details.
 
 ## Table of contents

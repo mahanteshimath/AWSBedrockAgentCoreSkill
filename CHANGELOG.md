@@ -3,6 +3,18 @@
 All notable changes to this project are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## v0.1.2 — 2026-08-14
+
+### Added
+- August 2026 freshness audit reference covering post-June changes across AgentCore harness, Runtime, direct code deploy, Gateway, Identity, Policy, Managed Knowledge Base, Observability, Evaluations, networking, quotas/metrics, Registry, Payments, terminals, and Step Functions.
+
+### Changed
+- Updated the router and README to make the freshness audit a first-stop overlay for current AgentCore work.
+- Routed new low-code agent builds to AgentCore harness and clarified that Bedrock Agents is now Agents Classic for existing migrations rather than a default for new builds.
+- Expanded production routing to include Runtime Instances, Gateway runtime/HTTP/inference targets, Private Key JWT, unified span destinations, and Managed Knowledge Base considerations.
+- Added per-reference August 2026 refresh notes across the full reference library so each area surfaces current high-impact deltas before older June-baseline guidance.
+- Reconciled stale maturity/source-index statements for AgentCore Harness, Optimization/A-B testing, Region availability, and source counts.
+
 ## v0.1.1 — 2026-06-04
 
 Initial public release of the **AWSBedrockAgentCoreSkill** Claude Code plugin (and agent skill).

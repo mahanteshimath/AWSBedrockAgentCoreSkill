@@ -1,5 +1,7 @@
 # IaC Best Practices for AWS AI Agents (Terraform-first)
 
+> **August 2026 refresh:** Deployment reviews must include AgentCore VPC networking for Runtime and built-in Browser/Code Interpreter tools. AgentCore creates ENIs into customer VPCs; public subnets do not provide internet access for those ENIs, so internet-bound tools need private subnets plus NAT and private API paths can use PrivateLink. _Source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-vpc.html_
+
 > Part of the **aws-bedrock-agentcore-skill** skill. See [SKILL.md](../SKILL.md) for the decision tree. Every source below is official - re-open it to verify details.
 
 ## Table of contents

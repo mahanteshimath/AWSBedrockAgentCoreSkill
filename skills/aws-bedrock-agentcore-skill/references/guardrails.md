@@ -1,5 +1,7 @@
 # Amazon Bedrock Guardrails
 
+> **August 2026 refresh:** Do not limit safety guidance to model-call Guardrails. AgentCore release notes and Policy docs indicate Gateway-layer Policy can evaluate traffic before tool access and can be paired with Bedrock Guardrails, giving teams deterministic authorization plus content/safety enforcement at the tool boundary. _Sources: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy.html, https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html_
+
 > Part of the **aws-bedrock-agentcore-skill** skill. See [SKILL.md](../SKILL.md) for the decision tree. Every source below is official - re-open it to verify details.
 
 ## Table of contents

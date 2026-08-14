@@ -1,5 +1,7 @@
 # Observability & Monitoring for AWS AI Agents
 
+> **August 2026 refresh:** New runtimes in supported Regions can use per-agent unified span destinations instead of only the shared `aws/spans` log group. Check `UNIFIED_TRACES_DESTINATION_ENABLED`, CloudWatch Transaction Search, `logs:PutResourcePolicy`, ADOT >= 0.18.0, and add `ActiveSessionCount` alarms for Runtime/Built-in Tools. _Sources: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/observability-configure.html, https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html_
+
 > Part of the **aws-bedrock-agentcore-skill** skill. See [SKILL.md](../SKILL.md) for the decision tree. Every source below is official - re-open it to verify details.
 
 ## Table of contents

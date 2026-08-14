@@ -1,5 +1,7 @@
 # Strands Agents - Multi-Agent Patterns
 
+> **August 2026 refresh:** Multi-agent architectures can now combine Strands orchestration, AgentCore Runtime-hosted agents, Gateway runtime targets, and AWS Agent Registry discovery/governance. Registry is moving from the preview `bedrock-agentcore` namespace to `agent-registry`; update IAM, SDK clients, endpoints, and scripts where applicable. _Sources: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/registry-get-started.html, https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html_
+
 > Part of the **aws-bedrock-agentcore-skill** skill. See [SKILL.md](../SKILL.md) for the decision tree. Every source below is official - re-open it to verify details.
 
 ## Table of contents

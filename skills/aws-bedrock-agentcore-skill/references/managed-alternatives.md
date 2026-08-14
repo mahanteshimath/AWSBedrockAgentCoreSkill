@@ -1,5 +1,7 @@
 # Managed & Complementary AWS Agent Surfaces
 
+> **August 2026 refresh:** Amazon Bedrock Agents is now **Amazon Bedrock Agents Classic** and is not the default for new customers after 2026-07-30. For new low-code/declarative agents, evaluate AgentCore harness; use Agents Classic guidance only for existing customers and migration planning. _Sources: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-classic-maintenance-mode.html, https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html_
+
 > Part of the **aws-bedrock-agentcore-skill** skill. See [SKILL.md](../SKILL.md) for the decision tree. Every source below is official - re-open it to verify details.
 
 This skill defaults to the **code-first path** (Strands Agents + Amazon Bedrock + AgentCore). That is the right default for custom, dynamic agents - but it is **not always the best tool**. Before building, decide whether a **managed / lower-code** AWS service fits better, and remember the **complementary** capabilities that strengthen *any* agent (including a Strands one). Everything here is GA unless noted, and all are official AWS surfaces.

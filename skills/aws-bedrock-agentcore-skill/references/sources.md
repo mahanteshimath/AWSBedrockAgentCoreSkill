@@ -6,7 +6,7 @@ This is the central map of **topic → official source URL**. Use it to re-open 
 
 ## Source policy
 
-Every recommendation in this skill is traceable to a source below (369 unique official URLs). Provenance tiers:
+Every recommendation in this skill is traceable to a source below (376+ official URLs). Provenance tiers:
 
 - **AWS service docs** - `docs.aws.amazon.com` (Bedrock, AgentCore, IAM, CloudWatch, Prescriptive Guidance) and `aws.amazon.com/blogs` (official AWS blog).
 - **AWS open-source SDK** - `strandsagents.com` and the `github.com/strands-agents`, `github.com/aws`, `github.com/awslabs`, `github.com/aws-ia` orgs (official / AWS-maintained). `boto3.amazonaws.com` and `pypi.org` for the AWS SDK / package index.
@@ -149,7 +149,7 @@ Every recommendation in this skill is traceable to a source below (369 unique of
 - [Amazon Bedrock AgentCore Samples (GitHub)](https://github.com/awslabs/amazon-bedrock-agentcore-samples) - End-to-end examples per framework, including framework-specific subdirectories
 - [Strands Agents - Deploy to Bedrock AgentCore Runtime](https://strandsagents.com/docs/user-guide/deploy/deploy_to_bedrock_agentcore/) - Strands-specific deployment guide including Python and TypeScript paths
 - [bedrock-agentcore Python SDK (GitHub)](https://github.com/aws/bedrock-agentcore-sdk-python) - Source for bedrock-agentcore PyPI package, BedrockAgentCoreApp class, memory integrations
-- [AgentCore Harness overview](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html) - Managed agent harness (Preview): config-based agent loop, no custom code needed, powered by Strands Agents
+- [AgentCore Harness overview](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html) - Managed agent harness: config-based agent loop, no custom code needed, powered by Strands Agents
 - [AgentCore Harness - Get started](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-get-started.html) - CLI and boto3 paths; create-harness API, invoke_harness streaming response format, session ID requirements
 - [AgentCore Harness - Configure agents and models](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-config-and-models.html) - Default model claude-sonnet-4-6, override per invocation, multi-provider mid-session model switching
 
@@ -365,9 +365,9 @@ Every recommendation in this skill is traceable to a source below (369 unique of
 - [Dataset evaluations](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/dataset-evaluations.html) - on-demand and batch dataset runners, CI/CD integration (GA)
 - [Getting started with on-demand evaluation](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/getting-started-on-demand.html) - step-by-step CLI and SDK samples (GA)
 - [Evaluators](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/evaluators.html) - built-in and custom evaluators (GA)
-- [AgentCore optimization overview](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/optimization.html) - recommendations, configuration bundles, A/B testing (Preview)
-- [AgentCore optimization how it works](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/optimization-how-it-works.html) - improvement loop (Preview)
-- [A/B testing](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/ab-testing.html) - traffic split patterns, statistical significance (Preview)
+- [AgentCore optimization overview](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/optimization.html) - recommendations, configuration bundles, A/B testing (verify current maturity; August 2026 notes list Recommendations and A/B Testing as GA)
+- [AgentCore optimization how it works](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/optimization-how-it-works.html) - improvement loop (verify current maturity)
+- [A/B testing](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/ab-testing.html) - traffic split patterns, statistical significance (verify current maturity)
 - [Configuration bundles](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/configuration-bundles.html) - versioned config snapshots, rollback, audit trail (Preview)
 - [RuntimeEndpoint CDK construct (Python)](https://docs.aws.amazon.com/cdk/api/v2/python/aws_cdk.aws_bedrockagentcore/RuntimeEndpoint.html) - CDK IaC for pinned endpoints (GA)
 - [RuntimeEndpoint CDK construct (TypeScript)](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_bedrockagentcore.RuntimeEndpoint.html) - CDK IaC for pinned endpoints (GA)
@@ -553,7 +553,19 @@ Every recommendation in this skill is traceable to a source below (369 unique of
 - [Amazon Bedrock AgentCore - Bidirectional streaming via WebSocket (GA)](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-get-started-websocket.html) - WebSocket GA: @app.websocket decorator, endpoint /ws su porta 8080, autenticazione SigV4 headers/presigned URL/OAuth. Streaming bidirezionale per voice agent e real-time use case.
 - [Amazon Bedrock AgentCore - Quotas (limiti ufficiali)](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/bedrock-agentcore-limits.html) - 1000 sessioni attive in us-east-1/us-west-2, 500 nelle altre regioni. 25 TPS invoke per agente. 15 min sync timeout, 60 min streaming max, 8 ore async max. 2 GB max Docker image, 100 MB max payload.
 - [Amazon Bedrock AgentCore - File system configurations](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-filesystem-configurations.html) - Due categorie: managed session storage (Preview, no VPC, per-session, 14 giorni idle expiry) e BYO (S3 Files o EFS, shared, VPC obbligatorio). Fino a 5 configurazioni totali per agent runtime.
-- [Amazon Bedrock AgentCore - Supported AWS Regions](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-regions.html) - AgentCore Runtime GA in 16 regioni (incluso GovCloud US-West). AgentCore Harness preview solo in 4 regioni (us-east-1, us-west-2, eu-central-1, ap-southeast-2).
-- [Amazon Bedrock AgentCore - Harness [Preview]](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html) - Managed agent loop powered by Strands Agents. Richiede solo model + system prompt + tools. Supporta Bedrock, OpenAI, Gemini. microVM isolate, filesystem persistente, memory integrata. Preview in 4 regioni, nessun costo aggiuntivo.
+- [Amazon Bedrock AgentCore - Supported AWS Regions](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-regions.html) - AgentCore Runtime GA in 16 regioni (incluso GovCloud US-West). AgentCore feature availability varies by Region; re-check live table before deployment.
+- [Amazon Bedrock AgentCore - Harness](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html) - Managed agent loop powered by Strands Agents. Declare model, system prompt, tools/skills, memory, identity/networking/observability configuration; AgentCore runs the agent loop and can export to code where supported. Verify current Region/maturity in release notes.
 - [Amazon Bedrock AgentCore - Direct code deployment (Python)](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-get-started-code-deploy-python.html) - Deploy via zip file senza container. Max 250 MB compresso, 750 MB non compresso. Stessa API contract (@app.entrypoint o /invocations + /ping). Rate: 25 TPS per nuove sessioni.
 - [Strands Agents - Deploy to Terraform](https://strandsagents.com/docs/user-guide/deploy/deploy_to_terraform/index.md) - Terraform IaC per App Runner, Lambda (con Mangum), Google Cloud Run, Azure Container Instances
+
+
+## August 2026 freshness audit
+
+- `freshness-2026-08.md` — post-June-2026 refresh overlay. Official sources:
+  - https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html
+  - https://docs.aws.amazon.com/bedrock/latest/userguide/agents-classic-maintenance-mode.html
+  - https://aws.amazon.com/blogs/aws/introducing-amazon-bedrock-managed-knowledge-base-for-faster-more-accurate-enterprise-ai-applications/
+  - https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-code-deploy-supported-runtimes.html
+  - https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy.html
+  - https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/observability-configure.html
+  - https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-vpc.html

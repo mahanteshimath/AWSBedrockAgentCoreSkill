@@ -1,5 +1,7 @@
 # Deployment & IaC - Terraform (primary): Bedrock & AgentCore Resources
 
+> **August 2026 refresh:** IaC must model new AgentCore choices explicitly: harness vs Runtime, serverless vs Instances capacity providers, Gateway rate limits, Policy/Guardrails attachments, unified trace destinations, VPC ENIs, and Registry namespace migration where applicable. _Sources: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html, https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/registry-get-started.html_
+
 > Part of the **aws-bedrock-agentcore-skill** skill. See [SKILL.md](../SKILL.md) for the decision tree. Every source below is official - re-open it to verify details.
 
 **Companion files (do not duplicate):**

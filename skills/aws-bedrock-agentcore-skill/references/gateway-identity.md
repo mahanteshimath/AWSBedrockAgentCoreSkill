@@ -1,5 +1,7 @@
 # Amazon Bedrock AgentCore - Gateway & Identity
 
+> **August 2026 refresh:** Gateway is now a broader governed AI traffic plane: use rate limits, source validation, HTTP passthrough/runtime/inference targets, Policy/Cedar, and Gateway-layer Guardrails where appropriate. For Identity, prefer Private Key JWT over shared client secrets when supported, and reuse existing Secrets Manager ARNs when enterprise governance requires it. _Sources: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway.html, https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy.html, https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html_
+
 > Part of the **aws-bedrock-agentcore-skill** skill. See [SKILL.md](../SKILL.md) for the decision tree. Every source below is official - re-open it to verify details.
 
 ## Table of contents
