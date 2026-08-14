@@ -1,5 +1,7 @@
 # Bedrock Platform Features for Cost, Scale & Quality (Intelligent Prompt Router, Batch, Fine-tuning, Data Residency)
 
+> **August 2026 refresh:** Model lifecycle and managed-agent lifecycle are separate. Bedrock models continue to follow Active/Legacy/EOL lifecycle rules, while Bedrock Agents Classic closed to new customers on 2026-07-30. For exact model status, Regions, and prices, re-open live model lifecycle/model card/pricing pages. _Sources: https://docs.aws.amazon.com/bedrock/latest/userguide/model-lifecycle.html, https://docs.aws.amazon.com/bedrock/latest/userguide/agents-classic-maintenance-mode.html_
+
 > Part of the **aws-bedrock-agentcore-skill** skill. See [SKILL.md](../SKILL.md) for the decision tree. Every source below is official - re-open it to verify details.
 
 ## Table of contents

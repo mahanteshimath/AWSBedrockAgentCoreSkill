@@ -1,5 +1,7 @@
 # Hosting Any Framework on Bedrock AgentCore Runtime (LangGraph, CrewAI, LlamaIndex, Google ADK, Strands)
 
+> **August 2026 refresh:** AgentCore remains framework-agnostic, but Evaluations support now explicitly spans OpenAI Agents, LlamaIndex, Google ADK, Claude Agent SDK, Strands, LangGraph, and generic OpenTelemetry/OpenInference traces. Use that breadth when choosing test/optimization flows for non-Strands agents. _Sources: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/evaluations.html, https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html_
+
 > Part of the **aws-bedrock-agentcore-skill** skill. See [SKILL.md](../SKILL.md) for the decision tree. Every source below is official - re-open it to verify details.
 
 ## Table of contents

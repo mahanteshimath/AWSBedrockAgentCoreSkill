@@ -1,5 +1,7 @@
 # Testing & Safe Rollout for AWS AI Agents
 
+> **August 2026 refresh:** Treat AgentCore batch Evaluations, Recommendations, and A/B Testing as production rollout tools where available; keep Failure Insights labeled Public Preview. Pair rollout checks with unified traces and Gateway rate-limit telemetry. _Sources: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/evaluations.html, https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html_
+
 > Part of the **aws-bedrock-agentcore-skill** skill. See [SKILL.md](../SKILL.md) for the decision tree. Every source below is official - re-open it to verify details.
 
 ## Table of contents
@@ -46,7 +48,7 @@ Testing and safe rollout for AWS AI agents requires a layered approach because a
 | AgentCore Evaluations (on-demand, batch) | GA |
 | AgentCore Evaluations online evaluation | GA |
 | Strands Evals SDK (`strands-agents-evals`) | GA |
-| AgentCore optimization (recommendations, A/B testing, configuration bundles) | Preview |
+| AgentCore optimization (recommendations, A/B testing, configuration bundles) | Re-check current maturity; August 2026 release notes state Recommendations and A/B Testing are GA while Failure Insights remains Public Preview. |
 
 Cross-links to companion reference files:
 
@@ -618,7 +620,7 @@ See [gateway-identity.md](gateway-identity.md) for AgentCore Gateway target conf
 
 ### Configuration bundles for rollback
 
-Configuration bundles (Preview) store system prompts, model IDs, and tool descriptions as versioned, immutable snapshots - independent of your container image.
+Configuration bundles store system prompts, model IDs, and tool descriptions as versioned, immutable snapshots - independent of your container image.
 
 ```python
 import boto3
@@ -810,7 +812,7 @@ _Source: [docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-how-it-w
 
 6. **Static mocks break multi-turn stateful workflows.** A hardcoded mock response for `search_flights` cannot reflect state changes made by a preceding `book_flight` call. Use ToolSimulator's `share_state_id` for multi-turn scenarios. _Source: [strandsagents.com/blog/toolsimulator-scalable-tool-testing-ai-agents/](https://strandsagents.com/blog/toolsimulator-scalable-tool-testing-ai-agents/index.md)_
 
-7. **A/B testing requires AgentCore optimization to be enabled (Preview).** CloudTrail audit trail is not yet supported in the optimization preview. Do not use for workloads requiring a CloudTrail audit trail until this is resolved. _Source: [docs.aws.amazon.com/bedrock-agentcore/latest/devguide/optimization.html](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/optimization.html)_
+7. **A/B testing maturity changed after the June baseline.** August 2026 release notes state A/B Testing is GA; re-check live docs for CloudTrail/audit behavior before using it in regulated workloads. _Source: [docs.aws.amazon.com/bedrock-agentcore/latest/devguide/optimization.html](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/optimization.html)_
 
 8. **Configuration bundle names cannot contain hyphens.** Pattern: `[a-zA-Z][a-zA-Z0-9_]{0,99}`. Using a hyphen causes a validation error. _Source: [docs.aws.amazon.com/bedrock-agentcore/latest/devguide/configuration-bundles.html](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/configuration-bundles.html)_
 
@@ -862,9 +864,9 @@ Use this checklist for every agent change before advancing the production endpoi
 - [Dataset evaluations](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/dataset-evaluations.html) - on-demand and batch dataset runners, CI/CD integration (GA)
 - [Getting started with on-demand evaluation](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/getting-started-on-demand.html) - step-by-step CLI and SDK samples (GA)
 - [Evaluators](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/evaluators.html) - built-in and custom evaluators (GA)
-- [AgentCore optimization overview](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/optimization.html) - recommendations, configuration bundles, A/B testing (Preview)
-- [AgentCore optimization how it works](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/optimization-how-it-works.html) - improvement loop (Preview)
-- [A/B testing](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/ab-testing.html) - traffic split patterns, statistical significance (Preview)
+- [AgentCore optimization overview](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/optimization.html) - recommendations, configuration bundles, A/B testing (verify current maturity; August 2026 notes list Recommendations and A/B Testing as GA)
+- [AgentCore optimization how it works](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/optimization-how-it-works.html) - improvement loop (verify current maturity)
+- [A/B testing](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/ab-testing.html) - traffic split patterns, statistical significance (verify current maturity)
 - [Configuration bundles](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/configuration-bundles.html) - versioned config snapshots, rollback, audit trail (Preview)
 - [RuntimeEndpoint CDK construct (Python)](https://docs.aws.amazon.com/cdk/api/v2/python/aws_cdk.aws_bedrockagentcore/RuntimeEndpoint.html) - CDK IaC for pinned endpoints (GA)
 - [RuntimeEndpoint CDK construct (TypeScript)](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_bedrockagentcore.RuntimeEndpoint.html) - CDK IaC for pinned endpoints (GA)

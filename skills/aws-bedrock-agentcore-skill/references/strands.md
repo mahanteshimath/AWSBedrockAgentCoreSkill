@@ -1,5 +1,7 @@
 # Strands Agents SDK - Fundamentals
 
+> **August 2026 refresh:** Strands remains the default code-first orchestration path, but current architecture choices should first distinguish custom Strands+Runtime from AgentCore harness (managed Strands-powered loop) and from non-Strands frameworks hosted on Runtime. Export-from-harness-to-Strands can be useful when a declarative prototype needs code-level customization. _Sources: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html, https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html_
+
 > Part of the **aws-bedrock-agentcore-skill** skill. See [SKILL.md](../SKILL.md) for the decision tree. Every source below is official - re-open it to verify details.
 
 ## Table of contents

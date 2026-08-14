@@ -1,5 +1,7 @@
 # Amazon Bedrock AgentCore Runtime - Serverless Agent Hosting
 
+> **August 2026 refresh:** Re-check `freshness-2026-08.md` before applying older runtime guidance. Runtime now has more than the original container/serverless path: evaluate serverless sessions, direct code deployment runtimes, and Runtime **Instances** capacity providers/GPU/long-session needs separately. Container packaging constraints such as ARM64 do not automatically apply to every compute path. _Sources: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html, https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-code-deploy-supported-runtimes.html_
+
 > Part of the **aws-bedrock-agentcore-skill** skill. See [SKILL.md](../SKILL.md) for the decision tree. Every source below is official - re-open it to verify details.
 
 ## Table of contents
@@ -19,7 +21,7 @@
   - [Protocol support (MCP, A2A, AG-UI)](#protocol-support-mcp-a2a-ag-ui)
   - [Async and long-running tasks](#async-and-long-running-tasks)
   - [Streaming responses (SSE and WebSocket)](#streaming-responses-sse-and-websocket)
-  - [AgentCore Harness (Preview)](#agentcore-harness-preview)
+  - [AgentCore Harness](#agentcore-harness-preview)
   - [Direct code deploy runtime identifiers](#direct-code-deploy-runtime-identifiers)
   - [filesystemConfigurations](#filesystemconfigurations)
   - [Calling the runtime from a web backend](#calling-the-runtime-from-a-web-backend)
@@ -46,7 +48,7 @@
   - [Execution role trust policy with confused-deputy prevention](#execution-role-trust-policy-with-confused-deputy-prevention)
   - [Minimal direct-deploy execution role policy](#minimal-direct-deploy-execution-role-policy)
   - [AgentCore CLI quickstart commands](#agentcore-cli-quickstart-commands)
-  - [AgentCore Harness - invoke via boto3 (Preview)](#agentcore-harness--invoke-via-boto3-preview)
+  - [AgentCore Harness - invoke via boto3](#agentcore-harness--invoke-via-boto3-preview)
   - [Configure persistent session storage (filesystemConfigurations)](#configure-persistent-session-storage-filesystemconfigurations)
 - [Configuration reference](#configuration-reference)
 - [Gotchas](#gotchas)
@@ -58,7 +60,7 @@
 
 Amazon Bedrock AgentCore Runtime is a **GA** serverless, framework-agnostic hosting environment for deploying and running AI agents and tools at production scale. It provisions dedicated microVMs per session for complete isolation, supports extended runtimes up to 8 hours, accepts container images (ARM64) or direct code ZIP uploads (Python/Node.js), and exposes a well-defined HTTP service contract (`/invocations` POST, `/ping` GET on port 8080). The primary deployment path is the AgentCore CLI (`@aws/agentcore` npm package), backed by CDK. The runtime integrates natively with Strands Agents, LangGraph, Google ADK, OpenAI Agents SDK, and custom frameworks via the `bedrock-agentcore` Python SDK (`BedrockAgentCoreApp`). Consumption-based pricing charges only for active processing time, not idle wait.
 
-**Maturity note:** GA as of late 2025. Initial preview July 2025. Direct code deployment (Python) GA November 2025; Node.js GA April 2026. Bidirectional WebSocket streaming GA December 2025. Stateful MCP server features GA March 2026. AG-UI protocol support GA March 2026. Shell command execution (`InvokeAgentRuntimeCommand`) GA March 2026. **Managed Harness (config-based agent loop) is in PUBLIC PREVIEW as of June 2026** - available only in `us-east-1`, `us-west-2`, `eu-central-1`, `ap-southeast-2`. Persistent filesystem session storage is in Preview; BYO S3 Files and EFS are GA. Available in 16 AWS regions. _Source: [Quotas for Amazon Bedrock AgentCore](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/bedrock-agentcore-limits.html)_
+**Maturity note:** GA as of late 2025. Initial preview July 2025. Direct code deployment (Python) GA November 2025; Node.js GA April 2026. Bidirectional WebSocket streaming GA December 2025. Stateful MCP server features GA March 2026. AG-UI protocol support GA March 2026. Shell command execution (`InvokeAgentRuntimeCommand`) GA March 2026. **Managed Harness status changed after the June 2026 baseline; re-check `freshness-2026-08.md` and live release notes before deployment**. Persistent filesystem session storage is in Preview; BYO S3 Files and EFS are GA. Available in 16 AWS regions. _Source: [Quotas for Amazon Bedrock AgentCore](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/bedrock-agentcore-limits.html)_
 
 > For framework-specific deployment patterns (Lambda, Fargate, EKS) and Terraform/CDK IaC, see `deployment-iac.md` in this references directory.
 
@@ -204,7 +206,7 @@ _Source: [Handle asynchronous and long-running agents](https://docs.aws.amazon.c
 
 _Source: [Stream agent responses (SSE)](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/response-streaming.html)_
 
-### AgentCore Harness (Preview)
+### AgentCore Harness
 
 > **WARNING: PUBLIC PREVIEW** - Only available in `us-east-1`, `us-west-2`, `eu-central-1`, `ap-southeast-2`. Do not use in production outside these regions.
 
@@ -354,7 +356,7 @@ _Source: [Stream agent responses (SSE)](https://docs.aws.amazon.com/bedrock-agen
 
 ## Best practices
 
-- **Use the AgentCore CLI (`@aws/agentcore`) for new projects** - The CLI scaffolds CDK infrastructure, handles ARM64 packaging, supports CodeZip and Container builds, provides local hot-reload dev server (`agentcore dev`), and wraps all SDK calls. Install with `npm install -g @aws/agentcore`. Use `npm install -g @aws/agentcore@preview` for Harness and other preview features. _Source: <https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-get-started-cli.html>_
+- **Use the AgentCore CLI (`@aws/agentcore`) for new projects** - The CLI scaffolds CDK infrastructure, handles ARM64 packaging, supports CodeZip and Container builds, provides local hot-reload dev server (`agentcore dev`), and wraps all SDK calls. Install with `npm install -g @aws/agentcore`. Check current CLI channel guidance in live docs before choosing stable versus preview CLI packages. _Source: <https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-get-started-cli.html>_
 
 - **Use CodeZip (direct code deploy) for rapid prototyping; switch to Container for production complexity** - CodeZip allows 25 new sessions/second vs 100/minute for containers, enables faster redeployment, and auto-patches the language runtime. Use containers when package size exceeds 250 MB compressed (750 MB uncompressed), you have existing container CI/CD pipelines, or need specialized system dependencies. A hybrid approach is common: CodeZip for prototyping, container for production. _Source: <https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-get-started-code-deploy.html>_
 
@@ -1114,7 +1116,7 @@ _Source: <https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-
 # Install CLI (requires Node.js 20+ and AWS CDK)
 npm install -g @aws/agentcore
 
-# For Harness and other preview features
+# Check live docs for any preview-only features before install
 npm install -g @aws/agentcore@preview
 
 # Create project non-interactively (all flags)
@@ -1168,7 +1170,7 @@ agentcore status
 agentcore add agent --name SecondAgent --language Python --framework Strands
 agentcore add memory --name MyMemory --strategies SEMANTIC
 agentcore add credential --name MyApiKey --type api-key --api-key your-api-key
-agentcore add harness  # Harness (preview)
+agentcore add harness  # Harness; verify current CLI support in live docs
 
 # Validate config
 agentcore validate
@@ -1181,7 +1183,7 @@ _Source: <https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-
 
 ---
 
-### AgentCore Harness - invoke via boto3 (Preview)
+### AgentCore Harness - invoke via boto3
 
 > **WARNING: PUBLIC PREVIEW** - Available only in `us-east-1`, `us-west-2`, `eu-central-1`, `ap-southeast-2`.
 
@@ -1366,6 +1368,6 @@ _Source: <https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-
 - [Amazon Bedrock AgentCore Samples (GitHub)](https://github.com/awslabs/amazon-bedrock-agentcore-samples) - End-to-end examples per framework, including framework-specific subdirectories
 - [Strands Agents - Deploy to Bedrock AgentCore Runtime](https://strandsagents.com/docs/user-guide/deploy/deploy_to_bedrock_agentcore/) - Strands-specific deployment guide including Python and TypeScript paths
 - [bedrock-agentcore Python SDK (GitHub)](https://github.com/aws/bedrock-agentcore-sdk-python) - Source for bedrock-agentcore PyPI package, BedrockAgentCoreApp class, memory integrations
-- [AgentCore Harness overview](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html) - Managed agent harness (Preview): config-based agent loop, no custom code needed, powered by Strands Agents
+- [AgentCore Harness overview](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html) - Managed agent harness: config-based agent loop, no custom code needed, powered by Strands Agents
 - [AgentCore Harness - Get started](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-get-started.html) - CLI and boto3 paths; create-harness API, invoke_harness streaming response format, session ID requirements
 - [AgentCore Harness - Configure agents and models](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-config-and-models.html) - Default model claude-sonnet-4-6, override per invocation, multi-provider mid-session model switching

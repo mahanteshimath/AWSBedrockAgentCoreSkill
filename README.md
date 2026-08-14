@@ -17,7 +17,7 @@ Concretely, it is not a single template or a code generator. It is a routing lay
 - a `SKILL.md` that acts as a decision tree: it maps the user's use case to a recommended stack and to the exact reference files to open;
 - **21 reference files** (~19,000+ lines) covering each area in depth, with an inline `_Source:` URL on every best practice and code snippet;
 - **assets**: a service-selection matrix, a model-selection guide, a pre-production checklist, ready-to-adapt IAM policies, and copy-paste starter snippets;
-- a central source index ([`sources.md`](skills/aws-bedrock-agentcore-skill/references/sources.md)) mapping each topic to its official URL (**369 unique official sources**).
+- a central source index ([`sources.md`](skills/aws-bedrock-agentcore-skill/references/sources.md)) mapping each topic to its official URL (**376+ official source URLs**).
 
 The agent loads only the files a task needs (progressive disclosure), so it stays useful without pulling the whole library into context.
 
@@ -26,7 +26,7 @@ The agent loads only the files a task needs (progressive disclosure), so it stay
 Building agents on AWS (especially Bedrock AgentCore) means a lot of scattered documentation and a fast-changing API surface. Left on its own, a coding agent either crawls across many pages or proceeds by trial and error, and still gets the version-specific details wrong. This skill removes both problems:
 
 - **The best practices are already gathered and organized.** The agent does not have to research half the internet: the relevant official guidance for each area is collected in one place and routed by use case, so it goes straight to the right approach instead of probing around.
-- **It is current and source-cited.** Bedrock AgentCore is recent and changes often. The skill encodes today's official answers and attaches the documentation URL to each one, so the agent (and you) can verify a recommendation instead of trusting it blindly. There are **636 inline source citations** across the reference files.
+- **It is current and source-cited.** Bedrock AgentCore is recent and changes often. The skill encodes today's official answers and attaches the documentation URL to each one, so the agent (and you) can verify a recommendation instead of trusting it blindly. There are **650+ inline source citations** across the reference files.
 - **It prevents the common, non-obvious mistakes.** These are the kind of errors that look correct in review and only fail at deploy: using the legacy `InvokeModel` instead of the Converse API, passing `serviceTier` as a bare string, calling a deprecated `structured_output()`, setting a 1-hour prompt-cache TTL on a model that only supports 5 minutes, ignoring the ARM64 AgentCore runtime contract, or mis-sizing `max_tokens` and hitting the 5x token burndown. The skill documents the correct form for each.
 - **It picks the right pattern, not just the API.** The decision tree distinguishes a simple chatbot from a tool-using agent, RAG, a multi-agent system, a serverless production deployment, and so on, and points to the matching reference. It also covers when a managed alternative (Bedrock Agents, Flows, the Responses API) fits better than the code-first path.
 - **It is maturity-aware.** Every feature is labelled GA or Preview, and Preview is never recommended as a production default.
@@ -106,7 +106,7 @@ The `SKILL.md` decision tree routes across the realistic use-case space:
 │       │   ├── deployment-best-practices.md
 │       │   ├── deployment-cdk.md          # CDK (secondary)
 │       │   ├── deployment-frameworks.md   # Lambda / Fargate / EKS
-│       │   └── sources.md                 # central official-source index (369 URLs)
+│       │   └── sources.md                 # central official-source index (376+ URLs)
 │       ├── assets/
 │       │   ├── service-selection-matrix.md
 │       │   ├── model-selection-guide.md
@@ -118,7 +118,7 @@ The `SKILL.md` decision tree routes across the realistic use-case space:
 └── LICENSE
 ```
 
-At a glance: 1 router + 21 reference files (~19,000+ lines), 14 assets, 636 inline source citations, 369 unique official source URLs.
+At a glance: 1 router + 21 reference files (~19,000+ lines), 14 assets, 650+ inline source citations, 376+ official source URLs.
 
 ## How it was built and verified
 

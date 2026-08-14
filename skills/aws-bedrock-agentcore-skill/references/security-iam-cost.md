@@ -1,5 +1,7 @@
 # Security, IAM, Cost & Quotas for AWS AI Agents
 
+> **August 2026 refresh:** Update production security reviews for Private Key JWT in Identity, Gateway rate limits, Policy/Cedar before tool access, VPC ENIs/PrivateLink/NAT, unified trace IAM (`logs:PutResourcePolicy`), Agent Registry namespace changes, and live quota checks rather than stale hard-coded limits. _Sources: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html, https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-vpc.html, https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/registry-get-started.html_
+
 > Part of the **aws-bedrock-agentcore-skill** skill. See [SKILL.md](../SKILL.md) for the decision tree. Every source below is official - re-open it to verify details.
 
 ## Table of contents
@@ -47,7 +49,7 @@
 
 Complete operational guide for configuring least-privilege IAM, KMS encryption, VPC/PrivateLink, data privacy, and cost optimization for AI agents on Amazon Bedrock and Amazon Bedrock AgentCore Runtime. Covers the real execution roles for both Bedrock Agents and AgentCore Runtime, `bedrock:InvokeModel` / `bedrock-agentcore:*` permissions, token-based quotas (TPM/TPD with 5x burndown rate for Claude 3.7+), cost-saving strategies via prompt caching, intelligent prompt routing, cross-region inference, batch inference, and Provisioned Throughput. Includes the three specific AgentCore PrivateLink endpoints and AgentCore Runtime quotas (active sessions, TPS, hardware allocation).
 
-**Maturity note:** All features covered are **GA** as of June 2026, with the following exceptions: Claude 3.5 Sonnet v2 prompt caching is listed as "Preview" in the official `prompt-caching.html` table. **AgentCore Harness and AgentCore Payments are still in Preview** (4–5 regions) - do not use for production without verifying regional availability. Agent Registry is in Preview in 5 regions. Claude Mythos is in Gated Research Preview in us-east-1 only.
+**Maturity note:** All features covered are **GA** as of June 2026, with the following exceptions: Claude 3.5 Sonnet v2 prompt caching is listed as "Preview" in the official `prompt-caching.html` table. **AgentCore Harness, Payments, Optimization, and Registry maturity changed after the June baseline** - re-check `freshness-2026-08.md`, release notes, and Region tables before production use. Claude Mythos is in Gated Research Preview in us-east-1 only.
 
 ---
 
@@ -935,7 +937,7 @@ _Source: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Con
 
 - **RPM (requests per minute) is no longer enforced:** The RPM quota on `bedrock-runtime` has been officially deprecated. Throttling is governed ONLY by token-based quotas (TPM and TPD). Do not request RPM increases for `bedrock-runtime`.
 
-- **AgentCore Harness and AgentCore Payments are still in Preview (not GA)** with reduced availability (4–5 regions). Do not use for production workloads without verifying regional availability.
+- **AgentCore Harness and Payments maturity/Region availability changed after this June baseline.** Re-check `freshness-2026-08.md`, release notes, and Region tables before production use.
 
 - **Global cross-region inference for Bedrock requires an IAM policy with THREE statements:** One for the inference profile in the source region, one for the FM in-region, one for the FM global (ARN without region or account). Missing even one causes `AccessDeniedException`.
 
@@ -968,7 +970,7 @@ _Source: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Con
 - [Claude Sonnet 4.6 model card](https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-anthropic-claude-sonnet-4-6.html) - ID: `anthropic.claude-sonnet-4-6`; context 1M; max output 64K; TTL caching 5m only (per official prompt-caching table); Geo IDs: `us./eu./au./jp.anthropic.claude-sonnet-4-6`; Global ID: `global.anthropic.claude-sonnet-4-6`. Launch: Feb 17, 2026.
 - [Claude Opus 4.6 model card](https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-anthropic-claude-opus-4-6.html) - ID: `anthropic.claude-opus-4-6-v1`; context 1M; max output 128K; TTL caching 5m only (not 1h per official prompt-caching table), min 4096 tokens; Geo IDs: `us./eu./au.anthropic.claude-opus-4-6-v1`. Launch: Feb 5, 2026.
 - [Amazon Bedrock pricing](https://aws.amazon.com/bedrock/pricing/) - Official pricing page. Claude 4.x prices are shown in the AWS console and accessible via `bedrock:GetFoundationModelAvailability`. Claude 3.5 Sonnet v2 (extended access): input $6.00, output $30.00, cache write $7.50, cache read $0.60 per 1M tokens.
-- [Supported AWS Regions for AgentCore](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-regions.html) - AgentCore Runtime GA in 16 regions including GovCloud. AgentCore Harness and Payments still in Preview with reduced availability.
+- [Supported AWS Regions for AgentCore](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-regions.html) - AgentCore Runtime GA in 16 regions including GovCloud. AgentCore Harness and Payments availability changes frequently; verify current maturity/Regions in release notes.
 
 ---
 

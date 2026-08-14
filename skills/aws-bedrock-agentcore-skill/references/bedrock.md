@@ -1,5 +1,7 @@
 # Amazon Bedrock - Models, Converse API & Knowledge Bases (RAG)
 
+> **August 2026 refresh:** RAG designs must now compare classic Amazon Bedrock Knowledge Bases with **Amazon Bedrock Managed Knowledge Base** for AgentCore/Gateway-connected enterprise RAG. Managed Knowledge Base is GA and adds managed ingestion/sync, managed vector storage, enterprise connectors, hybrid search, ranking, and multimodal content handling. _Sources: https://aws.amazon.com/blogs/aws/introducing-amazon-bedrock-managed-knowledge-base-for-faster-more-accurate-enterprise-ai-applications/, https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html_
+
 > Part of the **aws-bedrock-agentcore-skill** skill. See [SKILL.md](../SKILL.md) for the decision tree. Every source below is official - re-open it to verify details.
 
 ## Table of contents

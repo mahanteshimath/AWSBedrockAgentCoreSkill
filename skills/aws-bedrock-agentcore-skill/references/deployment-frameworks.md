@@ -1,5 +1,7 @@
 # Deploying Strands Agents - Lambda, Fargate/ECS, EKS
 
+> **August 2026 refresh:** Framework deployment on AgentCore Runtime should pick the compute path intentionally: serverless runtime, direct code deploy, or Runtime Instances for capacity-provider/GPU/long-session requirements. For direct code deploy, prefer current supported runtimes (Python 3.13/3.14 or Node.js 22 for new builds) and avoid deprecated Python versions. _Sources: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html, https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-code-deploy-supported-runtimes.html_
+
 > Part of the **aws-bedrock-agentcore-skill** skill. See [SKILL.md](../SKILL.md) for the decision tree. Every source below is official - re-open it to verify details.
 
 ## Table of contents
@@ -45,7 +47,7 @@ Strands Agents SDK (open source, AWS, **GA since May 2026**) supports four main 
 
 **Maturity:**
 - AgentCore Runtime: **GA** in 16 regions. Container and direct code deployment supported. WebSocket bidirectional: **GA**.
-- AgentCore Harness: **Public Preview** in 4 regions (us-east-1, us-west-2, eu-central-1, ap-southeast-2).
+- AgentCore Harness: re-check current GA/Region availability in `freshness-2026-08.md` and live release notes.
 - Managed Session Storage (AgentCore Runtime): **Preview**.
 - Lambda / Fargate / EKS deployment patterns: **consolidated and stable**.
 - AgentCore CLI (`@aws/agentcore` npm): **GA**, CDK supported, Terraform coming.
@@ -132,9 +134,9 @@ ARN pattern: `arn:aws:lambda:{region}:856699698935:layer:strands-agents-py{pytho
 
 npm tool (`@aws/agentcore`) for scaffolding, local development, and deployment to AgentCore Runtime. Commands: `agentcore create` (wizard), `agentcore dev` (local), `agentcore deploy` (AWS), `agentcore invoke` (test). Supports both container deployment and direct code deploy (zip). Generates `agentcore.json` and `aws-targets.json`. Available in 14 regions. CDK supported; Terraform coming. Replaces the old `bedrock-agentcore-starter-toolkit`.
 
-### AgentCore Harness [Preview]
+### AgentCore Harness
 
-Managed agent loop fully managed, powered by Strands Agents. Configuration: model + system prompt + tools (inline or via AgentCore Gateway/MCP). Handles orchestration, tool execution, memory, identity, VPC networking, observability. Supports Amazon Bedrock, OpenAI, Gemini, and mid-session provider switch. Stateful by default: isolated microVM per session, persistent filesystem, integrated AgentCore Memory. **Preview in 4 regions** (us-east-1, us-west-2, eu-central-1, ap-southeast-2). No additional cost (only pay for underlying AgentCore capabilities). Harness invocations share AgentCore Runtime quotas.
+Managed agent loop fully managed, powered by Strands Agents. Configuration: model + system prompt + tools (inline or via AgentCore Gateway/MCP). Handles orchestration, tool execution, memory, identity, VPC networking, observability. Supports Amazon Bedrock, OpenAI, Gemini, and mid-session provider switch. Stateful by default: isolated microVM per session, persistent filesystem, integrated AgentCore Memory. Re-check current Region availability in live docs before deployment. No additional cost (only pay for underlying AgentCore capabilities). Harness invocations share AgentCore Runtime quotas.
 
 ### Managed Session Storage vs BYO Filesystem (AgentCore Runtime)
 
@@ -1036,7 +1038,7 @@ _Source: https://strandsagents.com/docs/user-guide/deploy/deploy_to_aws_fargate/
 
 - **Managed Session Storage in AgentCore Runtime is in Preview (not GA).** Data is reset on agent runtime version update: every `agentcore deploy` that produces a new version deletes the persistent filesystem of existing sessions.
 
-- **AgentCore Harness is in Preview only in 4 regions** (us-east-1, us-west-2, eu-central-1, ap-southeast-2). AgentCore Runtime is GA in 16 regions. Do not confuse the two services.
+- **AgentCore Harness maturity/Region availability changed after this June baseline.** Re-check `freshness-2026-08.md` and the live release notes. Do not confuse Harness with AgentCore Runtime.
 
 - **The sync request timeout of AgentCore Runtime (15 minutes) is fixed and not modifiable.** `LifecycleConfiguration` only configures `idleRuntimeSessionTimeout` and `maxLifetime` (compute duration, not request timeout).
 
@@ -1075,8 +1077,8 @@ _Source: https://strandsagents.com/docs/user-guide/deploy/deploy_to_aws_fargate/
 - [Amazon Bedrock AgentCore - Bidirectional streaming via WebSocket (GA)](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-get-started-websocket.html) - WebSocket GA: `@app.websocket` decorator, endpoint `/ws` on port 8080, SigV4 headers/presigned URL/OAuth authentication. Bidirectional streaming for voice agents and real-time use cases.
 - [Amazon Bedrock AgentCore - Quotas (official limits)](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/bedrock-agentcore-limits.html) - 1000 active sessions in us-east-1/us-west-2, 500 in other regions. 25 TPS invoke per agent. 15 min sync timeout, 60 min streaming max, 8 hours async max. 2 GB max Docker image, 100 MB max payload.
 - [Amazon Bedrock AgentCore - File system configurations](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-filesystem-configurations.html) - Two categories: managed session storage (Preview, no VPC, per-session, 14-day idle expiry) and BYO (S3 Files or EFS, shared, VPC mandatory). Up to 5 total configurations per agent runtime.
-- [Amazon Bedrock AgentCore - Supported AWS Regions](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-regions.html) - AgentCore Runtime GA in 16 regions (including GovCloud US-West). AgentCore Harness preview only in 4 regions (us-east-1, us-west-2, eu-central-1, ap-southeast-2).
-- [Amazon Bedrock AgentCore - Harness [Preview]](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html) - Managed agent loop powered by Strands Agents. Requires only model + system prompt + tools. Supports Bedrock, OpenAI, Gemini. Isolated microVM, persistent filesystem, integrated memory. Preview in 4 regions, no additional cost.
+- [Amazon Bedrock AgentCore - Supported AWS Regions](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-regions.html) - AgentCore Runtime GA in 16 regions (including GovCloud US-West). AgentCore Harness availability changes frequently; verify current Region/maturity in release notes.
+- [Amazon Bedrock AgentCore - Harness](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html) - Managed agent loop powered by Strands Agents. Requires only model + system prompt + tools. Supports Bedrock, OpenAI, Gemini. Isolated microVM, persistent filesystem, integrated memory. Verify current Region/maturity and pricing in live docs.
 - [Amazon Bedrock AgentCore - Direct code deployment (Python)](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-get-started-code-deploy-python.html) - Deploy via zip file without container. Max 250 MB compressed, 750 MB uncompressed. Same API contract (`@app.entrypoint` or `/invocations` + `/ping`). Rate: 25 TPS for new sessions.
 - [Strands Agents - Deploy to Terraform](https://strandsagents.com/docs/user-guide/deploy/deploy_to_terraform/index.md) - Terraform IaC for App Runner, Lambda (with Mangum), Google Cloud Run, Azure Container Instances
 

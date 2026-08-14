@@ -1,5 +1,7 @@
 # Amazon Bedrock AgentCore - Built-in Tools (Browser & Code Interpreter)
 
+> **August 2026 refresh:** For Browser, Code Interpreter, and Web Search, add Gateway-side rate limits, `ActiveSessionCount` alarms, and VPC/NAT checks to every production design. Web Search connector v1.2.0 adds request-level include/exclude domain and published-date filters. _Sources: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/release-notes.html, https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-vpc.html_
+
 > Part of the **aws-bedrock-agentcore-skill** skill. See [SKILL.md](../SKILL.md) for the decision tree. Every source below is official - re-open it to verify details.
 
 ## Table of contents
@@ -39,7 +41,7 @@ Both tools follow a **session-based model** with two distinct AWS clients (contr
 
 Sessions run in isolated microVMs with dedicated CPU/memory/filesystem. State is wiped at session end. Timeouts are configurable from 15 minutes to 8 hours. Pricing is consumption-based: **$0.0895 per vCPU-hour** and **$0.00945 per GB-hour**, billed per second on peak active CPU and memory (I/O wait is not charged).
 
-**Maturity:** GA. AgentCore Built-in Tools (Browser + Code Interpreter) are GA in 16 AWS regions from October 2025. Node.js runtime for Code Interpreter added in preview/GA in April 2026 (v24.14.0). Web Bot Auth for Browser is in Preview. AgentCore Harness, Payments, and Optimization are in Preview. Custom browser extensions are GA (announced January 2026). Browser Profiles (with S3 storage billing from April 2026) are GA. Browser Proxies are GA.
+**Maturity:** GA. AgentCore Built-in Tools (Browser + Code Interpreter) are GA in 16 AWS regions from October 2025. Node.js runtime for Code Interpreter added in preview/GA in April 2026 (v24.14.0). Web Bot Auth for Browser is in Preview. Harness, Payments, and Optimization maturity changed after the June baseline; re-check `freshness-2026-08.md` and live release notes. Custom browser extensions are GA (announced January 2026). Browser Profiles (with S3 storage billing from April 2026) are GA. Browser Proxies are GA.
 
 ---
 
